@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package zebra2;
+
+message ReqMessage {
+    string filepath = 1;
+}
+
+message ResMessage {
+    int32 number = 1;
+}
+
+service Recognize {
+    rpc Predict (ReqMessage) returns (ResMessage);
+}

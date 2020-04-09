@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package zebra1;
+
+message Message {
+    string filepath = 1;
+}
+
+service PreProcessing {
+    rpc Threshold (Message) returns (Message);
+}
