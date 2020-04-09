@@ -3,8 +3,7 @@ from concurrent import futures
 
 import grpc
 
-import sample_pb2
-import sample_pb2_grpc
+from protobuf import sample_pb2_grpc, sample_pb2
 
 
 class SampleServiceServicer(sample_pb2_grpc.SampleServiceServicer):
