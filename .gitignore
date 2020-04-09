@@ -309,6 +309,6 @@ dmypy.json
 .pyre/
 
 # file upload
-media/
+image/
 
 # End of https://www.gitignore.io/api/flask
