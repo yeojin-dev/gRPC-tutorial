@@ -1,7 +1,10 @@
 import os
 
+import grpc
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
+
+from protobuf import zebra_pb2_grpc, zebra_pb2
 
 app = Flask(__name__)
 
@@ -14,9 +17,13 @@ def recognize_a_number():
 	filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'image', secure_filename(img.filename))
 	img.save(filepath)
 
-	# TODO: gRPC 연결
+	with grpc.insecure_channel('localhost:50000') as channel:
+		stub = zebra_pb2_grpc.Zebra1ServiceStub(channel)
+		message = zebra_pb2.ReqMessage(filepath=filepath)
+		response = stub.Recognize(message)
+		number = response.number
 
-	result = {'result': 'ok'}
+	result = {'result': number}
 	return jsonify(result)
 
 
