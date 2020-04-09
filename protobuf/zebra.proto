@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package zebra;
+
+message ReqMessage {
+    string filepath = 1;
+}
+
+message ResMessage {
+    int64 number = 1;
+}
+
+service Zebra1Service {
+    rpc Recognize (ReqMessage) returns (ResMessage);
+}
+
+service Zebra2Service {
+    rpc Inference (ReqMessage) returns (ResMessage);
+}
