@@ -22,4 +22,4 @@ if __name__ == '__main__':
 	protobuf_path = flags.protobuf_path
 
 	print(f'Generate pb2 files from {protobuf_path}')
-	protoc.main(('', '-I.', '--python_out=./protobuf', '--grpc_python_out=./protobuf', protobuf_path))
+	protoc.main(('', '-I.', '--python_out=.', '--grpc_python_out=.', protobuf_path))
