@@ -18,6 +18,11 @@ class Zebra2ServiceServicer(zebra_pb2_grpc.Zebra2ServiceServicer):
         print(f'Filepath from request: {request.filepath}')
         print(f'Result: {number}')
 
+        filepath = request.filepath
+
+        with open(filepath, 'wb') as img_file:
+            img_file.write(request.file_stream)
+
         res_message = zebra_pb2.ResMessage(number=number)
 
         return res_message

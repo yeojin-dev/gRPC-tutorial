@@ -14,10 +14,11 @@ class Zebra1ServiceServicer(zebra_pb2_grpc.Zebra1ServiceServicer):
     def Recognize(self, request, context):
         # TODO: image pre-processing
         print(f'Filepath from request: {request.filepath}')
+        print(f'File stream from request: {request.file_stream}')
 
         with grpc.insecure_channel('localhost:60000') as channel:
             stub = zebra_pb2_grpc.Zebra2ServiceStub(channel)
-            req_message = zebra_pb2.ReqMessage(filepath=request.filepath)
+            req_message = zebra_pb2.ReqMessage(filepath=request.filepath, file_stream=request.file_stream)
             response = stub.Inference(req_message)
             res_message = zebra_pb2.ResMessage(number=response.number)
 

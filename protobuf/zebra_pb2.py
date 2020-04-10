@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='zebra',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x14protobuf/zebra.proto\x12\x05zebra\"\x1e\n\nReqMessage\x12\x10\n\x08\x66ilepath\x18\x01 \x01(\t\"\x1c\n\nResMessage\x12\x0e\n\x06number\x18\x01 \x01(\x03\x32\x42\n\rZebra1Service\x12\x31\n\tRecognize\x12\x11.zebra.ReqMessage\x1a\x11.zebra.ResMessage2B\n\rZebra2Service\x12\x31\n\tInference\x12\x11.zebra.ReqMessage\x1a\x11.zebra.ResMessageb\x06proto3'
+  serialized_pb=b'\n\x14protobuf/zebra.proto\x12\x05zebra\"3\n\nReqMessage\x12\x10\n\x08\x66ilepath\x18\x01 \x01(\t\x12\x13\n\x0b\x66ile_stream\x18\x02 \x01(\x0c\"\x1c\n\nResMessage\x12\x0e\n\x06number\x18\x01 \x01(\x03\x32\x42\n\rZebra1Service\x12\x31\n\tRecognize\x12\x11.zebra.ReqMessage\x1a\x11.zebra.ResMessage2B\n\rZebra2Service\x12\x31\n\tInference\x12\x11.zebra.ReqMessage\x1a\x11.zebra.ResMessageb\x06proto3'
 )
 
 
@@ -38,6 +38,13 @@ _REQMESSAGE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='file_stream', full_name='zebra.ReqMessage.file_stream', index=1,
+      number=2, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -51,7 +58,7 @@ _REQMESSAGE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=31,
-  serialized_end=61,
+  serialized_end=82,
 )
 
 
@@ -81,8 +88,8 @@ _RESMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=63,
-  serialized_end=91,
+  serialized_start=84,
+  serialized_end=112,
 )
 
 DESCRIPTOR.message_types_by_name['ReqMessage'] = _REQMESSAGE
@@ -111,8 +118,8 @@ _ZEBRA1SERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=93,
-  serialized_end=159,
+  serialized_start=114,
+  serialized_end=180,
   methods=[
   _descriptor.MethodDescriptor(
     name='Recognize',
@@ -135,8 +142,8 @@ _ZEBRA2SERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   serialized_options=None,
-  serialized_start=161,
-  serialized_end=227,
+  serialized_start=182,
+  serialized_end=248,
   methods=[
   _descriptor.MethodDescriptor(
     name='Inference',

@@ -15,11 +15,11 @@ def recognize_a_number():
 
 	# TODO: 파일명 중복 피하기
 	filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'image', secure_filename(img.filename))
-	img.save(filepath)
+	file_stream = img.stream.read()
 
 	with grpc.insecure_channel('localhost:50000') as channel:
 		stub = zebra_pb2_grpc.Zebra1ServiceStub(channel)
-		message = zebra_pb2.ReqMessage(filepath=filepath)
+		message = zebra_pb2.ReqMessage(filepath=filepath, file_stream=file_stream)
 		response = stub.Recognize(message)
 		number = response.number
 

@@ -4,6 +4,7 @@ package zebra;
 
 message ReqMessage {
     string filepath = 1;
+    bytes file_stream = 2;
 }
 
 message ResMessage {
