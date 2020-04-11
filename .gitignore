@@ -311,6 +311,9 @@ dmypy.json
 # file upload
 image/
 
+# saved model(tensorflow)
+protobuf/model/
+
 # End of https://www.gitignore.io/api/flask
 
 # Created by https://www.gitignore.io/api/macos
