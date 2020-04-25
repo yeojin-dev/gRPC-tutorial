@@ -7,6 +7,10 @@ message ReqMessage {
     bytes file_stream = 2;
 }
 
+message ImageReqMessage {
+    repeated float pixel = 1;
+}
+
 message ResMessage {
     int64 number = 1;
 }
@@ -16,5 +20,5 @@ service Zebra1Service {
 }
 
 service Zebra2Service {
-    rpc Inference (ReqMessage) returns (ResMessage);
+    rpc Inference (ImageReqMessage) returns (ResMessage);
 }

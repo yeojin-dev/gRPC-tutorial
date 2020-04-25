@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='zebra',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\x14protobuf/zebra.proto\x12\x05zebra\"3\n\nReqMessage\x12\x10\n\x08\x66ilepath\x18\x01 \x01(\t\x12\x13\n\x0b\x66ile_stream\x18\x02 \x01(\x0c\"\x1c\n\nResMessage\x12\x0e\n\x06number\x18\x01 \x01(\x03\x32\x42\n\rZebra1Service\x12\x31\n\tRecognize\x12\x11.zebra.ReqMessage\x1a\x11.zebra.ResMessage2B\n\rZebra2Service\x12\x31\n\tInference\x12\x11.zebra.ReqMessage\x1a\x11.zebra.ResMessageb\x06proto3'
+  serialized_pb=b'\n\x14protobuf/zebra.proto\x12\x05zebra\"3\n\nReqMessage\x12\x10\n\x08\x66ilepath\x18\x01 \x01(\t\x12\x13\n\x0b\x66ile_stream\x18\x02 \x01(\x0c\" \n\x0fImageReqMessage\x12\r\n\x05pixel\x18\x01 \x03(\x02\"\x1c\n\nResMessage\x12\x0e\n\x06number\x18\x01 \x01(\x03\x32\x42\n\rZebra1Service\x12\x31\n\tRecognize\x12\x11.zebra.ReqMessage\x1a\x11.zebra.ResMessage2G\n\rZebra2Service\x12\x36\n\tInference\x12\x16.zebra.ImageReqMessage\x1a\x11.zebra.ResMessageb\x06proto3'
 )
 
 
@@ -62,6 +62,37 @@ _REQMESSAGE = _descriptor.Descriptor(
 )
 
 
+_IMAGEREQMESSAGE = _descriptor.Descriptor(
+  name='ImageReqMessage',
+  full_name='zebra.ImageReqMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='pixel', full_name='zebra.ImageReqMessage.pixel', index=0,
+      number=1, type=2, cpp_type=6, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=84,
+  serialized_end=116,
+)
+
+
 _RESMESSAGE = _descriptor.Descriptor(
   name='ResMessage',
   full_name='zebra.ResMessage',
@@ -88,11 +119,12 @@ _RESMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=84,
-  serialized_end=112,
+  serialized_start=118,
+  serialized_end=146,
 )
 
 DESCRIPTOR.message_types_by_name['ReqMessage'] = _REQMESSAGE
+DESCRIPTOR.message_types_by_name['ImageReqMessage'] = _IMAGEREQMESSAGE
 DESCRIPTOR.message_types_by_name['ResMessage'] = _RESMESSAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -102,6 +134,13 @@ ReqMessage = _reflection.GeneratedProtocolMessageType('ReqMessage', (_message.Me
   # @@protoc_insertion_point(class_scope:zebra.ReqMessage)
   })
 _sym_db.RegisterMessage(ReqMessage)
+
+ImageReqMessage = _reflection.GeneratedProtocolMessageType('ImageReqMessage', (_message.Message,), {
+  'DESCRIPTOR' : _IMAGEREQMESSAGE,
+  '__module__' : 'protobuf.zebra_pb2'
+  # @@protoc_insertion_point(class_scope:zebra.ImageReqMessage)
+  })
+_sym_db.RegisterMessage(ImageReqMessage)
 
 ResMessage = _reflection.GeneratedProtocolMessageType('ResMessage', (_message.Message,), {
   'DESCRIPTOR' : _RESMESSAGE,
@@ -118,8 +157,8 @@ _ZEBRA1SERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=114,
-  serialized_end=180,
+  serialized_start=148,
+  serialized_end=214,
   methods=[
   _descriptor.MethodDescriptor(
     name='Recognize',
@@ -142,15 +181,15 @@ _ZEBRA2SERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   serialized_options=None,
-  serialized_start=182,
-  serialized_end=248,
+  serialized_start=216,
+  serialized_end=287,
   methods=[
   _descriptor.MethodDescriptor(
     name='Inference',
     full_name='zebra.Zebra2Service.Inference',
     index=0,
     containing_service=None,
-    input_type=_REQMESSAGE,
+    input_type=_IMAGEREQMESSAGE,
     output_type=_RESMESSAGE,
     serialized_options=None,
   ),

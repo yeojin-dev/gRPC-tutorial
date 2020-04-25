@@ -75,7 +75,7 @@ class Zebra2ServiceStub(object):
         """
         self.Inference = channel.unary_unary(
                 '/zebra.Zebra2Service/Inference',
-                request_serializer=protobuf_dot_zebra__pb2.ReqMessage.SerializeToString,
+                request_serializer=protobuf_dot_zebra__pb2.ImageReqMessage.SerializeToString,
                 response_deserializer=protobuf_dot_zebra__pb2.ResMessage.FromString,
                 )
 
@@ -94,7 +94,7 @@ def add_Zebra2ServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Inference': grpc.unary_unary_rpc_method_handler(
                     servicer.Inference,
-                    request_deserializer=protobuf_dot_zebra__pb2.ReqMessage.FromString,
+                    request_deserializer=protobuf_dot_zebra__pb2.ImageReqMessage.FromString,
                     response_serializer=protobuf_dot_zebra__pb2.ResMessage.SerializeToString,
             ),
     }
@@ -118,7 +118,7 @@ class Zebra2Service(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/zebra.Zebra2Service/Inference',
-            protobuf_dot_zebra__pb2.ReqMessage.SerializeToString,
+            protobuf_dot_zebra__pb2.ImageReqMessage.SerializeToString,
             protobuf_dot_zebra__pb2.ResMessage.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)

@@ -2,6 +2,7 @@ import time
 from concurrent import futures
 
 import grpc
+import tensorflow as tf
 
 from protobuf import zebra_pb2_grpc, zebra_pb2
 
@@ -12,17 +13,26 @@ class Zebra1ServiceServicer(zebra_pb2_grpc.Zebra1ServiceServicer):
         pass
 
     def Recognize(self, request, context):
-        # TODO: image pre-processing
         print(f'Filepath from request: {request.filepath}')
         print(f'File stream from request: {request.file_stream}')
 
+        img_tensor = self.get_flatten_image_tensor(request.stream)
+
         with grpc.insecure_channel('localhost:60000') as channel:
             stub = zebra_pb2_grpc.Zebra2ServiceStub(channel)
-            req_message = zebra_pb2.ReqMessage(filepath=request.filepath, file_stream=request.file_stream)
-            response = stub.Inference(req_message)
+            image_req_message = zebra_pb2.ImageReqMessage(pixel=img_tensor)
+            response = stub.Inference(image_req_message)
             res_message = zebra_pb2.ResMessage(number=response.number)
 
         return res_message
+
+    @staticmethod
+    def get_flatten_image_tensor(stream: bytes) -> tf.Tensor:
+        img_grayscale = tf.image.decode_png(stream, channels=1)
+        img_resized = tf.image.resize(img_grayscale, [28, 28])
+        img_casted = tf.cast(img_resized, tf.float32)
+        img_tensor = tf.reshape(img_casted, [28 * 28, 1])
+        return img_tensor
 
 
 if __name__ == '__main__':

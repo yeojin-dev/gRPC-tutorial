@@ -1,8 +1,8 @@
 import time
 from concurrent import futures
-import random
 
 import grpc
+import requests
 
 from protobuf import zebra_pb2_grpc, zebra_pb2
 
@@ -13,15 +13,17 @@ class Zebra2ServiceServicer(zebra_pb2_grpc.Zebra2ServiceServicer):
         pass
 
     def Inference(self, request, context):
-        # TODO: OCR
-        number = random.randint(1, 100)
-        print(f'Filepath from request: {request.filepath}')
-        print(f'Result: {number}')
+        print(f'Filepath from request: {request.pixel}')
 
-        filepath = request.filepath
+        # TODO: Zebra2 제거하고 Zebra1 서버에서 tenserflow/serving 도커 이미지에 직접 gRPC 프로토콜로 통신
+        data = {'inputs': list(request.pixel)}
+        response = requests.post(
+            'http://127.0.0.1:8501/v1/models/mnist:predict',
+            json=data,
+        )
 
-        with open(filepath, 'wb') as img_file:
-            img_file.write(request.file_stream)
+        result = response.json()['outputs'][0]
+        number = result.index(max(result))
 
         res_message = zebra_pb2.ResMessage(number=number)
 
