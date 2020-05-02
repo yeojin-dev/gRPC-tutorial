@@ -13,6 +13,34 @@
 python ./model/sample_mnist.py
 ```
 
+### 텐서플로 서빙 gRPC 서버 구축(local)
+
+* `tensorflow/serving` 도커 이미지를 이용
+
+```shell script
+docker run --rm -p 8500:8500 --name tensorflow-mnist --mount type=bind,source=$(pwd)/protobuf/model/mnist,target=/models/mnist -e MODEL_NAME=mnist -t tensorflow/serving
+```
+
+#### 텐서플로 서빙 서버 호출 예시
+
+```python
+# server/zebra1_server.py
+request = predict_pb2.PredictRequest()
+request.model_spec.name = 'mnist'
+
+dim = [tensor_shape_pb2.TensorShapeProto.Dim(size=28 * 28)]
+shape = tensor_shape_pb2.TensorShapeProto(dim=dim)
+img_tensor_content = np.array(tensor).tostring()  # tensor is a tf.Tensor from image
+tensor_proto = tensor_pb2.TensorProto(
+    dtype=types_pb2.DT_FLOAT, tensor_shape=shape, tensor_content=img_tensor_content,
+)
+request.inputs['flatten_input'].CopyFrom(tensor_proto)
+
+with grpc.insecure_channel('localhost:8500') as channel:
+    stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
+    response = stub.Predict(request)
+```
+
 ### 텐서플로 서빙 REST API 서버 구축(local)
 
 * `tensorflow/serving` 도커 이미지를 이용
@@ -21,13 +49,13 @@ python ./model/sample_mnist.py
 docker run --rm -p 8501:8501 --name tensorflow-mnist --mount type=bind,source=$(pwd)/protobuf/model/mnist,target=/models/mnist -e MODEL_NAME=mnist -t tensorflow/serving
 ```
 
-### 텐서플로 서빙 서버 호출 예시
+#### 텐서플로 서빙 서버 호출 예시
 
-#### 메타데이터
+##### 메타데이터
 
 * GET http://127.0.0.1:8501/v1/models/mnist/metadata
 
-##### 응답 예시
+###### 응답 예시
 
 ```json
 {
@@ -104,11 +132,11 @@ docker run --rm -p 8501:8501 --name tensorflow-mnist --mount type=bind,source=$(
 }
 ```
 
-#### 추론
+##### 추론
 
 * POST http://127.0.0.1:8501/v1/models/mnist/metadata
 
-##### body
+###### body
 
 * mnist 데이터셋의 이미지 픽셀 정보를 flatten 처리
 * 28 * 28 픽셀의 이미지이기 때문에 길이 784의 array 필요
@@ -124,7 +152,7 @@ docker run --rm -p 8501:8501 --name tensorflow-mnist --mount type=bind,source=$(
 }
 ```
 
-##### 응답 예시
+###### 응답 예시
 
 ```json
 {
