@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+
+  nginx:
+    depends_on:
+      - zebra1
+    image: nginx:latest
+    volumes:
+      - ../nginx/zebra1:/etc/nginx/conf.d
+    ports:
+      - 49000:50000
+
+  zebra1:
+    depends_on:
+      - tensorflow_serving
+    build:
+      context: ../../
+      dockerfile: devops/docker/zebra1/Dockerfile
+    hostname: zebra1
+    ports:
+      - 51000:51000
+
+  tensorflow_serving:
+    image: tensorflow/serving
+    volumes:
+      - ../../protobuf/model/mnist:/models/mnist
+    environment:
+      - MODEL_NAME=mnist
+    hostname: tensorflow_serving
+    ports:
+      - 8500:8500

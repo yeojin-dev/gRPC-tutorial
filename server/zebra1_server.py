@@ -22,7 +22,7 @@ class Zebra1ServiceServicer(zebra_pb2_grpc.Zebra1ServiceServicer):
         img_tensor = self.get_flatten_image_tensor(request.file_stream)
         predict_request = self.get_predict_request_from_image_tensor(img_tensor)
 
-        with grpc.insecure_channel('localhost:8500') as channel:
+        with grpc.insecure_channel('tensorflow_serving:8500') as channel:
             stub = prediction_service_pb2_grpc.PredictionServiceStub(channel)
             response = stub.Predict(predict_request)
 
@@ -62,7 +62,7 @@ if __name__ == '__main__':
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=5))
     zebra_pb2_grpc.add_Zebra1ServiceServicer_to_server(Zebra1ServiceServicer(), server)
 
-    server.add_insecure_port('[::]:50000')
+    server.add_insecure_port('[::]:51000')
     server.start()
 
     print('Starting zebra1 server...')

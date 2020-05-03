@@ -17,7 +17,7 @@ def recognize_a_number():
 	filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'image', secure_filename(img.filename))
 	file_stream = img.stream.read()
 
-	with grpc.insecure_channel('localhost:50000') as channel:
+	with grpc.insecure_channel('localhost:49000') as channel:
 		stub = zebra_pb2_grpc.Zebra1ServiceStub(channel)
 		message = zebra_pb2.ReqMessage(filepath=filepath, file_stream=file_stream)
 		response = stub.Recognize(message)
